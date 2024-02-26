@@ -1,10 +1,22 @@
-﻿using System.Xml.Linq;
-using StudentApp;
+﻿using StudentApp;
+using System.Xml.Linq;
 
 namespace StudentApp
 {
     public class Student : StudentBase
+
     {
+        public enum subjectOfTeaching
+        {
+            combinatorics______ ,
+            algebra____________ ,
+            physics____________ ,
+            communicativeness__ ,
+            teamwork_ability___ 
+
+        }
+
+
         public delegate Student NazwaNazwa(Student messa);
 
 
@@ -154,10 +166,10 @@ namespace StudentApp
         public string Nazwa { get; set; }
     }
 }
-    
+
 //    public List<Obiekt> listaObiektow = new List<Obiekt>();
 
-  
+
 //    listaObiektow.Add(new Obiekt { Id = 1, Nazwa = "Obiekt1" });
 //listaObiektow.Add(new Obiekt { Id = 2, Nazwa = "Obiekt2" });
 
