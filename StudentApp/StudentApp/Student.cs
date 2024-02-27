@@ -1,4 +1,5 @@
-﻿using StudentApp;
+﻿using ChallengeApp2024;
+using StudentApp;
 using System.Xml.Linq;
 
 namespace StudentApp
@@ -6,17 +7,6 @@ namespace StudentApp
     public class Student : StudentBase
 
     {
-        public enum subjectOfTeaching
-        {
-            combinatorics______ ,
-            algebra____________ ,
-            physics____________ ,
-            communicativeness__ ,
-            teamwork_ability___ 
-
-        }
-
-
         public delegate Student NazwaNazwa(Student messa);
 
 
@@ -26,7 +16,7 @@ namespace StudentApp
         private List<string> listOfStudents = new List<string>();
 
 
-        internal List<Students> list2 = new List<Students>();
+        //internal List<Students> list2 = new List<Students>();
 
 
         private bool oneOfTheConditionsIsMet = false;
@@ -38,71 +28,95 @@ namespace StudentApp
         static string nname;
 
 
-
         static string fileName = "Klasa2.txt";
+
+        public enum subjectOfTeaching
+        {
+            combinatorics______ ,
+            algebra____________ ,
+            physics____________ ,
+            communicativeness__ ,
+            teamwork_ability___ 
+        }
 
         public Student(string name, string surname) : base(name, surname)
         {
             NazwaNazwa del;
         }
 
-        public override void AddStudentToList(string student)
+        public Student(string nameAndSurname) : base(nameAndSurname)
         {
-            if (File.Exists(fileName))
-            {
-                using (var reader = File.OpenText(fileName))
-                {
-                    var line = reader.ReadLine();
-
-                    while (line != null)
-                    {
-                        string[] wordsStudent = line.Split(' ');
-                        if (wordsStudent.Length > 1)
-                        {
-
-                            var name = wordsStudent[0];
-                            var surname = wordsStudent[1];
-                            Student anotherStudent = new Student(name, surname);
-                            this.list2.Add(new Students { Id = 1, Nazwa = "Students1" });
-
-                        }
-
-                        //this.listOfStudents.Add(line);
-                    }
-
-                    line = reader.ReadLine();
-
-                }
-
-            }
+            NazwaNazwa del;
         }
 
-        //public override Student GetGetGet(Student student)
+        //public override void AddStudentToList(string student)
         //{
-        //    student = list2[uczen];
+        //    if (File.Exists(fileName))
+        //    {
+        //        using (var reader = File.OpenText(fileName))
+        //        {
+        //            var line = reader.ReadLine();
+
+        //            while (line != null)
+        //            {
+        //                string[] wordsStudent = line.Split(' ');
+        //                if (wordsStudent.Length > 1)
+        //                {
+
+        //                    var name = wordsStudent[0];
+        //                    var surname = wordsStudent[1];
+        //                    Student anotherStudent = new Student(name, surname);
+        //                    this.list2.Add(new Students { Id = 1, Nazwa = "Students1" });
+
+        //                }
+
+        //                //this.listOfStudents.Add(line);
+        //            }
+
+        //            line = reader.ReadLine();
+
+        //        }
+
+        //    }
         //}
 
-        public override void GetStudent(Student student)
-        {
-            foreach (var studentFromList in this.listOfStudents)
-            {
-                string[] wordsStudent = studentFromList.Split(' ');
 
-                if (wordsStudent.Length > 1)
-                {
-                    var name = wordsStudent[0];
-                    var surname = wordsStudent[1];
-                    Student anotherStudent = new Student(name, surname);
+        //public override void GetStudent(Student student)
+        //{
+        //    foreach (var studentFromList in this.listOfStudents)
+        //    {
+        //        string[] wordsStudent = studentFromList.Split(' ');
 
-                }
-            }
-        }
+        //        if (wordsStudent.Length > 1)
+        //        {
+        //            var name = wordsStudent[0];
+        //            var surname = wordsStudent[1];
+        //            Student anotherStudent = new Student(name, surname);
+
+        //        }
+        //    }
+        //}
 
         public override void AddGrade(float grade)
         {
-            this.grades.Add(grade);
-        }
+            Statistics statistics = new Statistics();
 
+            if (grade >= 0 && grade <= 100)
+
+            {
+                this.grades.Add(grade);
+                
+                
+                statistics.AddGrade(grade);
+              
+            }
+            else
+            {
+                throw new Exception("This grade is out of range");
+            }
+
+
+    }
 
         public override void AddGrade(string grade)
         {
@@ -157,15 +171,54 @@ namespace StudentApp
             }
         }
 
-    }
+
+        public override Statistics GetStatistics()
+        {
+            var statistics = new Statistics();
+
+            foreach (var grade in grades)
+            {
+                statistics.AddGrade(grade);
+            }
+
+            return statistics;
+        }
 
 
-    public class Students
-    {
-        public int Id { get; set; }
-        public string Nazwa { get; set; }
+
+
+        //public override Statistics GetStatistics()
+        //{
+        //    var statistics = new Statistics();
+
+        //    if (File.Exists(fileName))
+        //    {
+        //        using (var reader = File.OpenText(fileName))
+        //        {
+        //            var line = reader.ReadLine();
+
+        //            while (line != null)
+        //            {
+        //                //var line = reader.ReadLine();
+        //                if (float.TryParse(line, out float number))
+        //                {
+        //                    statistics.AddGrade(number);
+        //                }
+        //                line = reader.ReadLine();
+        //            }
+        //        }
+        //    }
+        //    return statistics;
+        //}
     }
+//   public string Nazwa { get; set; }
+    //}
 }
+
+
+
+
+
 
 //    public List<Obiekt> listaObiektow = new List<Obiekt>();
 

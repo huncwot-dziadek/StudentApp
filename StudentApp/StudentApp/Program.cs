@@ -1,4 +1,5 @@
-﻿using StudentApp;
+﻿using ChallengeApp2024;
+using StudentApp;
 using System;
 using System.IO;
 using System.Xml.Linq;
@@ -8,19 +9,28 @@ List<string> students = new List<string>();
 
 int numberOfSubjects = 0;
 
-string filePath = "GroupOfStudents.txt";
+string fileIn = "AllStudents.txt";
+string fileOut = "ResultsAllStudents.txt";
 
-int lineCount = File.ReadAllLines(filePath).Length;
+int lineCount = File.ReadAllLines(fileIn).Length;
 
-
-LoadingListStudentsFromFile(filePath);
-
-//
-//CreatingSeparatFileForEachStudent(students[0], students[1]);
+LoadingListStudentsFromFile(fileIn);
 
 Student anotherStudent = new Student(students[0], students[1]);
 
 AddingTheStudentGradesForAllSubjects();
+
+Console.WriteLine();
+Console.WriteLine("============================================");
+Console.WriteLine($"{anotherStudent.Name} {anotherStudent.Surname} final results:");
+Console.WriteLine($"Masimum rating = {anotherStudent.GetStatistics().Max}   ");
+Console.WriteLine($"Average rating = {anotherStudent.GetStatistics().Average:N2}   ");
+Console.WriteLine("============================================");
+Console.Write($"Max = {anotherStudent.GetStatistics().Max}   ");
+Console.Write($"Average = {anotherStudent.GetStatistics().Average:N2}   ");
+
+
+
 
 
 
@@ -49,8 +59,8 @@ void LoadingListStudentsFromFile(string filePath)
             var nname = wordsStudent[0];
             var ssurname = wordsStudent[1];
             Student anotherStudent = new Student(nname, ssurname);
+            students.Add(studentNameAndSurname);
         }
-
 
     }
 }
@@ -58,15 +68,17 @@ void LoadingListStudentsFromFile(string filePath)
 
 void AddingTheStudentGradesForAllSubjects()
 {
-    for (int k = 0; k < 5; k++)
+    Statistics statistics = new Statistics();
+
+    for (int i = 0; i < 5; i++)
     {
         if (numberOfSubjects < 5)
         {
             Console.Write($"{(Student.subjectOfTeaching)numberOfSubjects} ");
 
-            var gradeE = Console.ReadLine();
+            var grade = Console.ReadLine();
 
-            anotherStudent.AddGrade(gradeE);
+            anotherStudent.AddGrade(grade);
 
             numberOfSubjects++;
         }
@@ -74,8 +86,12 @@ void AddingTheStudentGradesForAllSubjects()
         {
             break;
         }
+
+
     }
 }
+
+
 
 
 
