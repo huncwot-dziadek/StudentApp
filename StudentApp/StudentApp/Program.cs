@@ -1,24 +1,49 @@
 ﻿using ChallengeApp2024;
 using StudentApp;
 using System;
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Xml.Linq;
-
 
 List<string> students = new List<string>();
 
 int numberOfSubjects = 0;
-
 string fileIn = "AllStudents.txt";
 string fileOut = "ResultsAllStudents.txt";
 
+File.Create(fileOut).Close();
+
+
 int lineCount = File.ReadAllLines(fileIn).Length;
+
+Console.WriteLine("Welcome to the program WHICH STUDENT WILL ADVANCE");
+Console.WriteLine("                       ==========================");
+Console.WriteLine();
+Console.WriteLine("This is the first huncwot program");
+Console.WriteLine("Here we go");
+Console.WriteLine();
 
 LoadingListStudentsFromFile(fileIn);
 
-Student anotherStudent = new Student(students[0], students[1]);
+Student anotherStudent = new Student(students[0]);
+
+Console.WriteLine(students[0], students[1]);
+Console.WriteLine();
+Console.WriteLine("Enter the student's grades:");
+Console.WriteLine();
+
+
+
+
+
+
 
 AddingTheStudentGradesForAllSubjects();
+
+Console.WriteLine();
+Console.WriteLine(students[0], students[1]);
+
 
 Console.WriteLine();
 Console.WriteLine("============================================");
@@ -50,16 +75,20 @@ void LoadingListStudentsFromFile(string filePath)
         .FirstOrDefault();
 
         students.Add(studentNameAndSurname);
-        string fileName = studentNameAndSurname + ".txt";
-        File.Create(fileName).Close();
+        //string fileName = studentNameAndSurname + ".txt";
+       // File.Create(fileName).Close();
+
+        //Student anotherStudent = new Student(studentNameAndSurname);
+        //students.Add(studentNameAndSurname);
+
 
         string[] wordsStudent = students[i].Split(' ');
         if (wordsStudent.Length > 1)
         {
-            var nname = wordsStudent[0];
-            var ssurname = wordsStudent[1];
-            Student anotherStudent = new Student(nname, ssurname);
-            students.Add(studentNameAndSurname);
+            //var nname = wordsStudent[0];
+            //var ssurname = wordsStudent[1];
+            Student anotherStudent = new Student(wordsStudent[0], wordsStudent[1]);
+            //students.Add(wordsStudent[0] + "_" + wordsStudent[1]);
         }
 
     }
@@ -81,12 +110,17 @@ void AddingTheStudentGradesForAllSubjects()
             anotherStudent.AddGrade(grade);
 
             numberOfSubjects++;
+
         }
         else
         {
             break;
         }
 
+        using (var writer = File.AppendText(fileOut))
+        {
+            writer.WriteLine($"{students[0]} {anotherStudent.GetStatistics().Max} {anotherStudent.GetStatistics().Average}");
+        }
 
     }
 }

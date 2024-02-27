@@ -16,9 +16,6 @@ namespace StudentApp
         private List<string> listOfStudents = new List<string>();
 
 
-        //internal List<Students> list2 = new List<Students>();
-
-
         private bool oneOfTheConditionsIsMet = false;
 
 
@@ -104,11 +101,15 @@ namespace StudentApp
             if (grade >= 0 && grade <= 100)
 
             {
-                this.grades.Add(grade);
-                
+                this.grades.Add(grade);              
                 
                 statistics.AddGrade(grade);
-              
+
+                //using (var writer = File.AppendText(fileName))
+                //{
+                //    writer.WriteLine(grade);
+                //}
+
             }
             else
             {
