@@ -1,6 +1,4 @@
-﻿using ChallengeApp2024;
-
-namespace StudentApp
+﻿namespace StudentApp
 {
     public abstract class StudentBase
     {

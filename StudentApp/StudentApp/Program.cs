@@ -1,12 +1,14 @@
-﻿using ChallengeApp2024;
-using StudentApp;
+﻿using StudentApp;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 List<string> students = new List<string>();
+
+List<Student> allStudentsFromFile = new List<Student>();
 
 int numberOfSubjects = 0;
 string fileIn = "AllStudents.txt";
@@ -26,7 +28,15 @@ Console.WriteLine();
 
 LoadingListStudentsFromFile(fileIn);
 
-Student anotherStudent = new Student(students[0]);
+
+
+
+
+
+//Student anotherStudent = new Student(students[0]);
+
+Student anotherStudent = allStudentsFromFile[0];
+
 
 Console.WriteLine(students[0], students[1]);
 Console.WriteLine();
@@ -75,6 +85,8 @@ void LoadingListStudentsFromFile(string filePath)
         .FirstOrDefault();
 
         students.Add(studentNameAndSurname);
+
+
         //string fileName = studentNameAndSurname + ".txt";
        // File.Create(fileName).Close();
 
@@ -82,46 +94,77 @@ void LoadingListStudentsFromFile(string filePath)
         //students.Add(studentNameAndSurname);
 
 
-        string[] wordsStudent = students[i].Split(' ');
-        if (wordsStudent.Length > 1)
+        string[] wordsStudent = studentNameAndSurname.Split(' ');
+
+        //foreach (string word in wordsStudent)
+       if (wordsStudent.Length > 1)
         {
             //var nname = wordsStudent[0];
             //var ssurname = wordsStudent[1];
             Student anotherStudent = new Student(wordsStudent[0], wordsStudent[1]);
             //students.Add(wordsStudent[0] + "_" + wordsStudent[1]);
+
+            allStudentsFromFile.Add(anotherStudent);
+            
+            
+            Console.WriteLine("AAAAA");
+            
+            Console.Write($"{anotherStudent.Name}     ");
+            Console.WriteLine(anotherStudent.Surname);
+
+
+
+            Console.WriteLine("BBBBB");
         }
+
+
 
     }
 }
+
+
 
 
 void AddingTheStudentGradesForAllSubjects()
 {
     Statistics statistics = new Statistics();
 
-    for (int i = 0; i < 5; i++)
+    foreach (var student in allStudentsFromFile)
     {
-        if (numberOfSubjects < 5)
+
+
+
+
+        for (int i = 0; i < 5; i++)
         {
-            Console.Write($"{(Student.subjectOfTeaching)numberOfSubjects} ");
+            if (numberOfSubjects < 5)
+            {
+                Console.Write($"{(Student.subjectOfTeaching)numberOfSubjects} ");
 
-            var grade = Console.ReadLine();
+                var grade = Console.ReadLine();
 
-            anotherStudent.AddGrade(grade);
+                student.AddGrade(grade);
 
-            numberOfSubjects++;
+                numberOfSubjects++;
+
+            }
+            else
+            {
+                break;
+            }
+
+
 
         }
-        else
-        {
-            break;
-        }
 
-        using (var writer = File.AppendText(fileOut))
-        {
-            writer.WriteLine($"{students[0]} {anotherStudent.GetStatistics().Max} {anotherStudent.GetStatistics().Average}");
-        }
 
+
+            using (var writer = File.AppendText(fileOut))
+            {
+                writer.WriteLine($"{anotherStudent.Name} {anotherStudent.Surname} {anotherStudent.GetStatistics().Max} {anotherStudent.GetStatistics().Average}");
+            }
+
+        
     }
 }
 

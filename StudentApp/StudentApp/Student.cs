@@ -1,5 +1,4 @@
-﻿using ChallengeApp2024;
-using StudentApp;
+﻿using StudentApp;
 using System.Xml.Linq;
 
 namespace StudentApp
@@ -103,7 +102,7 @@ namespace StudentApp
             {
                 this.grades.Add(grade);              
                 
-                statistics.AddGrade(grade);
+              
 
                 //using (var writer = File.AppendText(fileName))
                 //{
@@ -116,8 +115,8 @@ namespace StudentApp
                 throw new Exception("This grade is out of range");
             }
 
-
-    }
+            statistics.AddGrade(grade);
+        }
 
         public override void AddGrade(string grade)
         {

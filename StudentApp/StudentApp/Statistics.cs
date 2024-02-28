@@ -1,5 +1,4 @@
-﻿namespace ChallengeApp2024
-{
+﻿namespace StudentApp;
     public class Statistics
     {
         public float Max { get; private set; }
@@ -30,5 +29,5 @@
             this.Max = Math.Max(this.Max, grade);
         }
     }
-}
+
 
