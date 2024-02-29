@@ -1,10 +1,5 @@
 ﻿using StudentApp;
-using System;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 
 List<string> students = new List<string>();
 
@@ -15,7 +10,6 @@ string fileIn = "AllStudents.txt";
 string fileOut = "ResultsAllStudents.txt";
 
 File.Create(fileOut).Close();
-
 
 int lineCount = File.ReadAllLines(fileIn).Length;
 
@@ -28,28 +22,22 @@ Console.WriteLine();
 
 LoadingListStudentsFromFile(fileIn);
 
-
-
-
-
-
 //Student anotherStudent = new Student(students[0]);
 
 Student anotherStudent = allStudentsFromFile[0];
 
 
-Console.WriteLine(students[0], students[1]);
+Console.WriteLine(anotherStudent.Name, anotherStudent.Surname);
 Console.WriteLine();
 Console.WriteLine("Enter the student's grades:");
 Console.WriteLine();
 
-
-
-
-
-
-
 AddingTheStudentGradesForAllSubjects();
+
+//SavingResultsToFile();
+
+
+
 
 Console.WriteLine();
 Console.WriteLine(students[0], students[1]);
@@ -67,14 +55,6 @@ Console.Write($"Average = {anotherStudent.GetStatistics().Average:N2}   ");
 
 
 
-
-
-
-
-
-
-
-
 void LoadingListStudentsFromFile(string filePath)
 {
     for (int i = 0; i < lineCount; i++)
@@ -86,44 +66,22 @@ void LoadingListStudentsFromFile(string filePath)
 
         students.Add(studentNameAndSurname);
 
-
-        //string fileName = studentNameAndSurname + ".txt";
-       // File.Create(fileName).Close();
-
-        //Student anotherStudent = new Student(studentNameAndSurname);
-        //students.Add(studentNameAndSurname);
-
-
         string[] wordsStudent = studentNameAndSurname.Split(' ');
 
-        //foreach (string word in wordsStudent)
        if (wordsStudent.Length > 1)
         {
-            //var nname = wordsStudent[0];
-            //var ssurname = wordsStudent[1];
             Student anotherStudent = new Student(wordsStudent[0], wordsStudent[1]);
-            //students.Add(wordsStudent[0] + "_" + wordsStudent[1]);
 
             allStudentsFromFile.Add(anotherStudent);
             
             
             Console.WriteLine("AAAAA");
-            
             Console.Write($"{anotherStudent.Name}     ");
             Console.WriteLine(anotherStudent.Surname);
-
-
-
             Console.WriteLine("BBBBB");
         }
-
-
-
     }
 }
-
-
-
 
 void AddingTheStudentGradesForAllSubjects()
 {
@@ -131,11 +89,17 @@ void AddingTheStudentGradesForAllSubjects()
 
     foreach (var student in allStudentsFromFile)
     {
+        numberOfSubjects = 0;
 
-
+        anotherStudent = student;
+        Console.WriteLine("===========================");
+        Console.WriteLine($"{anotherStudent.Name} {anotherStudent.Surname}:");
+        Console.WriteLine();
 
 
         for (int i = 0; i < 5; i++)
+
+
         {
             if (numberOfSubjects < 5)
             {
@@ -144,6 +108,8 @@ void AddingTheStudentGradesForAllSubjects()
                 var grade = Console.ReadLine();
 
                 student.AddGrade(grade);
+                
+                statistics.AddGrade(float.Parse(grade));
 
                 numberOfSubjects++;
 
@@ -152,104 +118,16 @@ void AddingTheStudentGradesForAllSubjects()
             {
                 break;
             }
-
-
-
         }
-
-
-
-            using (var writer = File.AppendText(fileOut))
-            {
-                writer.WriteLine($"{anotherStudent.Name} {anotherStudent.Surname} {anotherStudent.GetStatistics().Max} {anotherStudent.GetStatistics().Average}");
-            }
-
-        
+        SavingResultsToFile();
     }
 }
 
-
-
-
-
-
-//void CreatingSeparatFileForEachStudent(string namme, string surnamme)
-//{
-//    string[] wordsStudent = students[0].Split(' ');
-//    if (wordsStudent.Length > 1)
-//    {
-
-//        var nname = wordsStudent[0];
-//        var ssurname = wordsStudent[1];
-//        Student anotherStudent = new Student(nname, ssurname);
-//    }
-//}
-
-
-
-
-
-
-
-//    anotherStudent.AddGrade(44);
-//string abla = "55";
-////{
-////    Console.WriteLine("Invalid date in file");
-////}
-
-//string name = "Jan";
-//string surname = "Kowalski";
-//string fileName = $"{name}_{surname}.txt";
-
-//// Zapisywanie danych do pliku
-//File.WriteAllText(fileName, abla);
-
-//Console.WriteLine($"Plik {fileName} został zapisany.");
-
-
-//Student student1 = list2.get(1);
-
-
-//Animal myDog = animalList.get(1);
-
-
-
-
-//for (int i = 0; i < 3; i++)
-//{
-//    var uczen = i;
-
-//    Student GetGetGet(Student);
-
-
-//    var number = Console.ReadLine();
-
-
-
-
-
-
-//}
-
-
-
-
-
-
-//string[] wordsLine = line.Split(' ');
-
-//if (wordsLine.Length > 1)
-//{
-
-
-
-//    NameKlasa1 = wordsLine[0];
-//    SurnameKlasa1 = wordsLine[1];
-//    Student student = new Student(NameKlasa1, SurnameKlasa1);
-
-//    Console.Write($"{student.Name}    ");
-//    Console.WriteLine(student.Surname);
-
-
-//}
+void SavingResultsToFile()
+{
+        using (var writer = File.AppendText(fileOut))
+        {
+            writer.WriteLine($"{anotherStudent.Surname} {anotherStudent.Name} {anotherStudent.GetStatistics().Max} {anotherStudent.GetStatistics().Average}");
+        }
+}
 

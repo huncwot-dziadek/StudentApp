@@ -45,54 +45,6 @@ namespace StudentApp
             NazwaNazwa del;
         }
 
-        //public override void AddStudentToList(string student)
-        //{
-        //    if (File.Exists(fileName))
-        //    {
-        //        using (var reader = File.OpenText(fileName))
-        //        {
-        //            var line = reader.ReadLine();
-
-        //            while (line != null)
-        //            {
-        //                string[] wordsStudent = line.Split(' ');
-        //                if (wordsStudent.Length > 1)
-        //                {
-
-        //                    var name = wordsStudent[0];
-        //                    var surname = wordsStudent[1];
-        //                    Student anotherStudent = new Student(name, surname);
-        //                    this.list2.Add(new Students { Id = 1, Nazwa = "Students1" });
-
-        //                }
-
-        //                //this.listOfStudents.Add(line);
-        //            }
-
-        //            line = reader.ReadLine();
-
-        //        }
-
-        //    }
-        //}
-
-
-        //public override void GetStudent(Student student)
-        //{
-        //    foreach (var studentFromList in this.listOfStudents)
-        //    {
-        //        string[] wordsStudent = studentFromList.Split(' ');
-
-        //        if (wordsStudent.Length > 1)
-        //        {
-        //            var name = wordsStudent[0];
-        //            var surname = wordsStudent[1];
-        //            Student anotherStudent = new Student(name, surname);
-
-        //        }
-        //    }
-        //}
-
         public override void AddGrade(float grade)
         {
             Statistics statistics = new Statistics();
@@ -102,12 +54,7 @@ namespace StudentApp
             {
                 this.grades.Add(grade);              
                 
-              
 
-                //using (var writer = File.AppendText(fileName))
-                //{
-                //    writer.WriteLine(grade);
-                //}
 
             }
             else
@@ -183,50 +130,5 @@ namespace StudentApp
 
             return statistics;
         }
-
-
-
-
-        //public override Statistics GetStatistics()
-        //{
-        //    var statistics = new Statistics();
-
-        //    if (File.Exists(fileName))
-        //    {
-        //        using (var reader = File.OpenText(fileName))
-        //        {
-        //            var line = reader.ReadLine();
-
-        //            while (line != null)
-        //            {
-        //                //var line = reader.ReadLine();
-        //                if (float.TryParse(line, out float number))
-        //                {
-        //                    statistics.AddGrade(number);
-        //                }
-        //                line = reader.ReadLine();
-        //            }
-        //        }
-        //    }
-        //    return statistics;
-        //}
     }
-//   public string Nazwa { get; set; }
-    //}
 }
-
-
-
-
-
-
-//    public List<Obiekt> listaObiektow = new List<Obiekt>();
-
-
-//    listaObiektow.Add(new Obiekt { Id = 1, Nazwa = "Obiekt1" });
-//listaObiektow.Add(new Obiekt { Id = 2, Nazwa = "Obiekt2" });
-
-
-//Obiekt wybranyObiekt = listaObiektow[0]; // Wybieramy pierwszy obiekt z listy
-//Console.WriteLine(wybranyObiekt.Nazwa); // Wyświetli: Obiekt1
-//}

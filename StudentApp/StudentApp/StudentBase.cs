@@ -19,10 +19,6 @@
 
         public string NameAndSurname { get; private set; }
 
-       // public abstract void AddStudentToList(string student);
-
-        //public abstract void GetStudent(Student student);
-
         public abstract void AddGrade(float grade);
 
         public abstract void AddGrade(string grade);
