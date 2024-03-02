@@ -1,14 +1,17 @@
 ﻿using StudentApp;
+using static StudentApp.Student;
 
 List<Student> allStudentsFromFile = new List<Student>();
-
-string fileOut = "ResultsAllStudents.txt";
-File.Create(fileOut).Close();
+List<Student> studentsWithMaximumGrade = new List<Student>();
+List<Student> studentsWithMaximumAverage = new List<Student>();
 
 string fileIn = "AllStudents.txt";
 int lineCount = File.ReadAllLines(fileIn).Length;
 
-int numberOfSubjects = 0;
+string fileOut = "ResultsAllStudents.txt";
+File.Create(fileOut).Close();
+
+int numberOfTeaching = Enum.GetValues(typeof(subjectOfTeaching)).Length;
 
 Console.WriteLine("Welcome to the program WHICH STUDENT WILL RECEIVE THE AWARD");
 Console.WriteLine("                       ====================================");
@@ -19,18 +22,17 @@ Console.WriteLine();
 
 LoadingListStudentsFromFile(fileIn);
 
-Student anotherStudent = allStudentsFromFile[0];
-
-Console.WriteLine("Enter the student's grades:");
+Console.WriteLine("Your grade should be in the range:");
+Console.WriteLine("1, +1, 1+, -2, 2-, 2, +2, 2+, -3, 3-, 3, +3, 3+ ........ -5, 5-, 5, +5, 5+, -6, 6-, 6");
+Console.WriteLine();
+Console.WriteLine("Give a grades:");
 Console.WriteLine();
 
 AddingStudentGradesForAllSubjects();
 
 WritingToFile();
 
-Sortowanie();
-
-
+FindStudentsWithTheBestStatistics();
 
 void LoadingListStudentsFromFile(string filePath)
 {
@@ -43,12 +45,11 @@ void LoadingListStudentsFromFile(string filePath)
 
         string[] wordsStudent = studentNameAndSurname.Split(' ');
 
-        if (wordsStudent.Length == 2)
-        {
-            Student anotherStudent = new Student(wordsStudent[0], wordsStudent[1]);
-            allStudentsFromFile.Add(anotherStudent);
-        }
+        Student anotherStudentFromFile = new Student(wordsStudent[0], wordsStudent[1]);
+        allStudentsFromFile.Add(anotherStudentFromFile);
     }
+
+    Student anotherStudent = allStudentsFromFile[0];
 }
 
 void AddingStudentGradesForAllSubjects()
@@ -57,13 +58,13 @@ void AddingStudentGradesForAllSubjects()
 
     foreach (var anotherStudent in allStudentsFromFile)
     {
-        numberOfSubjects = 0;
+        int numberOfSubjects = 0;
 
-        Console.WriteLine("===========================");
+        Console.WriteLine("======================");
         Console.WriteLine($"{anotherStudent.Name} {anotherStudent.Surname}:");
         Console.WriteLine();
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < numberOfTeaching; i++)
         {
             Console.Write($"{(Student.subjectOfTeaching)numberOfSubjects} ");
 
@@ -73,7 +74,6 @@ void AddingStudentGradesForAllSubjects()
             {
                 anotherStudent.AddGrade(grade);
                 numberOfSubjects++;
-
             }
             catch (Exception ex)
             {
@@ -81,39 +81,54 @@ void AddingStudentGradesForAllSubjects()
                 i--;
             }
         }
-        Console.WriteLine("---------------------------");
+        Console.WriteLine("======================");
         Console.WriteLine();
     }
 }
 
-
-void Sortowanie()
+void FindStudentsWithTheBestStatistics()
 {
-    Student studentMax = allStudentsFromFile[0];
-    Student studentAverage = allStudentsFromFile[0];
+    var gradeMax = float.MinValue;
+    var averageMax = float.MinValue;
 
-    for (int i = 0; i < allStudentsFromFile.Count - 1; i++)
+    foreach (var student in allStudentsFromFile)
     {
-        if (allStudentsFromFile[i + 1].GetStatistics().Max > studentMax.GetStatistics().Max)
-        {
-            studentMax = allStudentsFromFile[i + 1];
-        }
+        gradeMax = Math.Max(gradeMax, student.GetStatistics().Max);
+        averageMax = Math.Max(averageMax, student.GetStatistics().Average);
+    }
 
-        if (allStudentsFromFile[i + 1].GetStatistics().Average > studentAverage.GetStatistics().Average)
+    foreach (var student in allStudentsFromFile)
+    {
+        if (student.GetStatistics().Max == gradeMax)
         {
-            studentAverage = allStudentsFromFile[i + 1];
+            studentsWithMaximumGrade.Add(student);
+        }
+    }
+
+    foreach (var student in allStudentsFromFile)
+    {
+        if (student.GetStatistics().Average == averageMax)
+        {
+            studentsWithMaximumAverage.Add(student);
         }
     }
     Console.WriteLine();
     Console.WriteLine("They receive the reward:");
-    Console.WriteLine("-----------------------------------------------------");
-    Console.Write("Student with the highest grade: ");
-    Console.Write($"{studentMax.Surname} {studentMax.Name}");
-    Console.WriteLine($" for the rating {studentMax.GetStatistics().Max}");
-    Console.Write("Student with the highest grade point average: ");
-    Console.Write($"{studentAverage.Surname} {studentAverage.Name}");
-    Console.WriteLine($" for the rating {studentAverage.GetStatistics().Average}");
-    Console.WriteLine("-----------------------------------------------------");
+    Console.WriteLine("------------------------------------------------------------");
+    Console.WriteLine($"Student/students with the highest grade: {gradeMax}");
+
+    foreach (var student in studentsWithMaximumGrade)
+    {
+        Console.WriteLine($"{student.Surname} {student.Name}");
+    }
+    Console.WriteLine();
+    Console.WriteLine($"Student/students with the highest grade point average: {averageMax}");
+
+    foreach (var student in studentsWithMaximumAverage)
+    {
+        Console.WriteLine($"{student.Surname} {student.Name}");
+    }
+    Console.WriteLine("------------------------------------------------------------");
 }
 
 void WritingToFile()

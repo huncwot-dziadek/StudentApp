@@ -1,7 +1,8 @@
-﻿namespace StudentApp
+﻿using System.Diagnostics;
+
+namespace StudentApp
 {
     public class Student : StudentBase
-
     {
         public delegate Student NazwaNazwa(Student messa);
 
@@ -30,7 +31,6 @@
             if (grade >= 0 && grade <= 100)
             {
                 this.grades.Add(grade);
-                statistics.AddGrade(grade);
             }
             else
             {
