@@ -4,11 +4,11 @@ namespace StudentApp
 {
     public class Student : StudentBase
     {
-        public delegate Student NazwaNazwa(Student messa);
 
         private List<float> grades = new List<float>();
 
-        private bool oneOfTheConditionsIsMet = false;
+
+        private bool oneOfTheConditionsIsMet;
 
         public enum subjectOfTeaching
         {
@@ -21,7 +21,6 @@ namespace StudentApp
 
         public Student(string name, string surname) : base(name, surname)
         {
-            NazwaNazwa del;
         }
 
         public override void AddGrade(float grade)
@@ -61,36 +60,30 @@ namespace StudentApp
 
             if (grade.Length == 2)
             {
-                for (int i = 0; i < grade.Length; i++)
+                oneOfTheConditionsIsMet = false;
+                int j = 1;
+
+                for (int i = 0; i < grade.Length; i++, j--)
                 {
-                    for (int j = 1; j >= 0; j--)
+                    if ((grade[i] >= 49 && grade[i] <= 54) && (grade[j] == 43))
                     {
-                        if ((grade[i] >= 49 && grade[i] <= 54) && (grade[j] == 43))
-                        {
-                            var rating = grade[i] - 48;
-                            var valueRating = ((rating - 1) * 20) + 5;
-                            AddGrade((float)valueRating);
-                            oneOfTheConditionsIsMet = true;
-                        }
-                        else if ((grade[i] >= 49 && grade[i] <= 54) && (grade[j] == 45))
-                        {
-                            var rating = grade[i] - 48;
-                            var valueRating = ((rating - 1) * 20) - 5;
-                            AddGrade((float)valueRating);
-                            oneOfTheConditionsIsMet = true;
-                        }
-                        else if (grade[1] == 43 || grade[i] == 45)
-                        {
-                            oneOfTheConditionsIsMet = true;
-                        }
-                        else
-                        {
-                            if (oneOfTheConditionsIsMet == false)
-                            {
-                                throw new Exception("Incorrectly entered rating");
-                            }
-                        }
+                        var rating = grade[i] - 48;
+                        var valueRating = ((rating - 1) * 20) + 5;
+                        AddGrade((float)valueRating);
+                        oneOfTheConditionsIsMet = true;
                     }
+                    else if ((grade[i] >= 49 && grade[i] <= 54) && (grade[j] == 45))
+                    {
+                        var rating = grade[i] - 48;
+                        var valueRating = ((rating - 1) * 20) - 5;
+                        AddGrade((float)valueRating);
+                        oneOfTheConditionsIsMet = true;
+                    }
+                }
+
+                if (oneOfTheConditionsIsMet == false)
+                {
+                    throw new Exception("Incorrectly entered grade");
                 }
             }
 
