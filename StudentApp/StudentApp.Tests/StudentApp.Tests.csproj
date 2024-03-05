@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudentApp\StudentApp.csproj" />
+	  
   </ItemGroup>
 
 </Project>

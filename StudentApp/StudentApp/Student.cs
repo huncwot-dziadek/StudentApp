@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace StudentApp
+﻿namespace StudentApp
 {
     public class Student : StudentBase
     {
